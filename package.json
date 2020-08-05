@@ -1,0 +1,10 @@
+{
+  "name": "assignment1-task2HD",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1"
+  }
+}

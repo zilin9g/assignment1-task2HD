@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>assignment1-task2HD</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="card" style="width:80%">
+        <img class="card-img-top" src="img/computer.jpg" style="width:50%" alt="Card image">
+        <div class="card-body">
+            <h3 class="card-title">Dell Inspiron 14 3493 Laptop 10th Gen i5-1035G1 Intel UHD 8GB RAM 1TB HDD Silver</h3>
+            <div class="card-text">
+                <h4 >Item specifics</h4>
+                <table width="100%" cellspacing="0" cellpadding="0" >
+
+                    <tr>
+                        <td >
+                            Condition:</td>
+
+                        <td width="50.0%">
+                            <div >
+
+
+                                Brand New: <span >A brand-new, unused, unopened, undamaged item in
+                                    its original packaging (where packaging is </span>
+                                <span >
+                                    applicable). Packaging should be the same as what is available in a retail store,
+                                    unless the item was packaged by the manufacturer in non-retail packaging, such as an
+                                    unprinted box or plastic bag. See the seller&#039;s listing for full details.
+                                        See all condition definitions- opens in a new window or
+                                            tab
+                                </span>
+                            </div>
+                        </td>
+                        <td >
+                            Model: </td>
+
+                        <td width="50.0%">
+                            <span>Inspiron 14 3000 Series - 3493</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            GPU: </td>
+
+                        <td width="50.0%">
+                            <span>Intel® UHD Graphics with shared graphics memory</span></td>
+                        <td >
+                            Colour: </td>
+
+                        <td width="50.0%">
+                            <span>Silver</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            Storage Type: </td>
+
+                        <td width="50.0%">
+                            <span>HDD (Hard Disk Drive)</span></td>
+                        <td >
+                            Operating System: </td>
+
+                        <td width="50.0%">
+                            <span>Windows 10 Home (64 bit) English</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            RAM Size: </td>
+
+                        <td width="50.0%">
+                            <span>8 GB</span></td>
+                        <td >
+                            Series: </td>
+
+                        <td width="50.0%">
+                            <span>Inspiron</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            Brand: </td>
+
+                        <td width="50.0%">
+                            <span>Dell</span></td>
+                        <td >
+                            Type: </td>
+
+                        <td width="50.0%">
+                            <span>Notebook/Laptop</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            Display: </td>
+
+                        <td width="50.0%">
+                            <span>FHD (1920 x 1080) Anti-Glare, Non Touch</span></td>
+                        <td >
+                            Processor Speed: </td>
+
+                        <td width="50.0%">
+                            <span>6MB Cache, up to 3.6 GHz</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            Processor: </td>
+
+                        <td width="50.0%">
+                            <span>10th Generation Intel® Core™ i5-1035G1 Processor</span></td>
+                        <td >
+                            Features: </td>
+
+                        <td width="50.0%">
+                            <span>Bluetooth, Built-in Webcam</span></td>
+                    </tr>
+                    <tr>
+                        <td >
+                            Screen Size: </td>
+
+                        <td width="50.0%">
+                            <span>14 in</span></td>
+                        <td >
+                            MPN: </td>
+
+                        <td width="50.0%">
+                            <span>HNI349306AU</span></td>
+                    </tr>
+                </table>
+
+            </div>
+            <h4 >Bid</h4>
+            <h5>Starting price: $2000</h5>
+            <h5>Bet time: 120 seconds</h5>
+            <div id="bidderInfo">
+                <p class="card-text">Current Bidder:<span id="bidderInfoName"></span><span class="ml-3"> Amount:</span><span id="bidderInfoAmount"></span></p>
+                <p id="winner" class="card-text text-primary"></p>
+            </div>
+            <div id="bidList" class="mt-3">
+
+            </div>
+            <div id="bidForm">
+                <form name="input" action="html_form_action.php" method="get">
+                    <div class="form-group">
+                        <label for="bidderName">Bidder Name:</label>
+                        <input type="text" class="form-control" id="bidderName">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="text" class="form-control" id="amount">
+                    </div>
+                    <input type="button" id="bid" class="btn btn-primary" value="Bid">
+                </form>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bid').click(function () {
+
+            var bidderName = $('#bidderName').val();
+            var amount = $('#amount').val();
+            var parameters = {
+                bidderName: bidderName,
+                amount: amount
+            }
+            $.get("http://localhost:3000/placebid", parameters, function (data) {
+                if(data.success==true){
+                    setTimeout(getBidder, 1000);
+                }else{
+                    alert(data.result);
+                }
+                
+            });
+        })
+        getBidder();
+    })
+
+    function getBidder() {
+        $.get("http://localhost:3000/getBidder", null, function (data) {
+            if (data.timer > 0) {
+                
+                $('#bidderInfo').attr("style", "display:block;");
+
+                $('#bidderInfoName').text(data.currentBidder.name);
+                $('#bidderInfoAmount').text(data.currentBidder.amount);
+
+                
+                var bidlist="";
+                data.bidList.forEach(element => {
+                    bidlist+="<p>Bidder:"+element.name+"  Amount:"+element.amount+"</p>";
+                });
+                $('#bidList').html(bidlist);
+                if (data.timer >= 120) {
+                    $('#winner').text(data.currentBidder.name + " is the winner.");
+                    $('#bidForm').attr("style", "display:none;");
+                } else {
+                    $('#winner').text(data.timer + "seconds past.");
+                    setTimeout(getBidder, 1000);
+                }
+            } else {
+                $('#bidderInfo').attr("style", "display:none;");
+            }
+
+
+        });
+    }
+</script>
